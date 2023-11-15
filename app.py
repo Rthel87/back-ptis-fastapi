@@ -4,7 +4,7 @@ from db import crud, models, schemas
 from db.database import SessionLocal, engine
 from typing import Union
 
-models.Base.metadata.create_all(bind=engine)
+# models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
