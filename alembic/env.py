@@ -5,6 +5,11 @@ from sqlalchemy import pool
 
 from alembic import context
 
+from dotenv import dotenv_values
+
+# this load environment variables from .env
+env_values = dotenv_values(".env")
+
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
@@ -26,6 +31,11 @@ target_metadata = Base.metadata
 # my_important_option = config.get_main_option("my_important_option")
 # ... etc.
 
+# Overwrite database url from environment variables
+# config.set_main_option("sqlalchemy.url", env_values["DB_URL"])
+
+# Set variable for 'sqlalchemy.url' in alembic.ini from environment variables
+config.set_main_option("db_url", env_values["DB_URL"])
 
 def run_migrations_offline() -> None:
     """Run migrations in 'offline' mode.

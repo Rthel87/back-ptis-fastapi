@@ -26,8 +26,8 @@ def upgrade() -> None:
         sa.Column('rol', sa.String, nullable=False),
         sa.Column('rango', sa.Integer, unique=True, nullable=False),
         sa.Column('borrado', sa.Boolean, default=False),
-        sa.Column('created_at', sa.DateTime, server_default=text("'NOW()'")),
-        sa.Column('updated_at', sa.DateTime, server_default=text("'NOW()'")),
+        sa.Column('created_at', sa.DateTime, server_default=text('NOW()')),
+        sa.Column('updated_at', sa.DateTime, server_default=text('NOW()')),
         sa.Column('deleted_at', sa.DateTime)
     )
 
