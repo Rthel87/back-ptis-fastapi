@@ -8,6 +8,15 @@ from typing import Union
 
 app = FastAPI()
 
+# Dependency
+## Creación de sesión de conexión a la base de datos
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
 @app.get('/')
 def read_root():
     return {"Hello": "World"}
@@ -15,3 +24,8 @@ def read_root():
 @app.get('/items/{item_id}')
 def read_item(item_id: int, q: Union[str, None] = None):
     return {"item_id": item_id, "q": q}
+
+@app.get('/jornadas', response_model=list[schemas.Jornada])
+def read_jornadas(db: Session = Depends(get_db)):
+    jornadas = crud.get_jornadas(db)
+    return jornadas
