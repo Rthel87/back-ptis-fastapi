@@ -8,7 +8,7 @@ class Rol(Base):
 
     id = Column(BigInteger, primary_key=True, index=True)
     rol = Column(String, index=True)
-    rango = Column(Integer, unique=True, index=True)
+    rango = Column(Integer, unique=True)
     borrado = Column(Boolean, default=False)
     created_at = Column(DateTime, server_default=text('NOW()'))
     updated_at = Column(DateTime, server_default=text('NOW()'))
@@ -24,7 +24,7 @@ class Usuario(Base):
     apellido_paterno = Column(String, index=True)
     apellido_materno = Column(String, index=True)
     run = Column(String, index=True)
-    correo_elec = Column(String, unique=True, index=True)
+    correo_elec = Column(String, unique=True)
     password = Column(String)
     rol_id = Column(BigInteger, ForeignKey("roles.id"))
     borrado = Column(Boolean, default=False)
@@ -41,10 +41,10 @@ class Jornada(Base):
 
     id = Column(BigInteger, primary_key=True, index=True)
     nombre = Column(String, index=True)
-    identificador = Column(Integer, unique=True, index=True)
+    identificador = Column(Integer, unique=True)
     borrado = Column(Boolean, default=False)
-    created_at = Column(DateTime, server_default=text('NOW()'))
-    updated_at = Column(DateTime, server_default=text('NOW()'))
+    created_at = Column(DateTime, server_default=text('NOW()'), nullable=False)
+    updated_at = Column(DateTime, server_default=text('NOW()'), nullable=False)
     deleted_at = Column(DateTime)
 
     secciones = relationship("Seccion", back_populates="jornada")
@@ -55,13 +55,13 @@ class Semestre(Base):
     id = Column(BigInteger, primary_key=True, index=True)
     numero = Column(Integer, index=True)
     agno = Column(Integer, index=True)
-    identificador = Column(String, unique=True, index=True)
+    identificador = Column(String, unique=True)
     activo = Column(Boolean, default=True)
     inicio = Column(Date)
     fin = Column(Date)
     borrado = Column(Boolean, default=False)
-    created_at = Column(DateTime, server_default=text('NOW()'))
-    updated_at = Column(DateTime, server_default=text('NOW()'))
+    created_at = Column(DateTime, server_default=text('NOW()'), nullable=False)
+    updated_at = Column(DateTime, server_default=text('NOW()'), nullable=False)
     deleted_at = Column(DateTime)
 
     secciones = relationship("Seccion", back_populates="semestre")
@@ -71,10 +71,10 @@ class Curso(Base):
 
     id = Column(BigInteger, primary_key=True, index=True)
     nombre = Column(String, index=True)
-    codigo = Column(String, unique=True, index=True)
+    codigo = Column(String, unique=True)
     borrado = Column(Boolean, default=False)
-    created_at = Column(DateTime, server_default=text('NOW()'))
-    updated_at = Column(DateTime, server_default=text('NOW()'))
+    created_at = Column(DateTime, server_default=text('NOW()'), nullable=False)
+    updated_at = Column(DateTime, server_default=text('NOW()'), nullable=False)
     deleted_at = Column(DateTime)
 
     secciones = relationship("Seccion", back_populates="curso")
@@ -83,13 +83,13 @@ class Seccion(Base):
     __tablename__ = "secciones"
 
     id = Column(BigInteger, primary_key=True, index=True)
-    codigo = Column(String, unique=True, index=True)
+    codigo = Column(String, unique=True)
     borrado = Column(Boolean, default=False)
     jornada_id = Column(BigInteger, ForeignKey("jornadas.id"))
     semestre_id = Column(BigInteger, ForeignKey("semestres.id"))
     curso_id = Column(BigInteger, ForeignKey("cursos.id"))
-    created_at = Column(DateTime, server_default=text('NOW()'))
-    updated_at = Column(DateTime, server_default=text('NOW()'))
+    created_at = Column(DateTime, server_default=text('NOW()'), nullable=False)
+    updated_at = Column(DateTime, server_default=text('NOW()'), nullable=False)
     deleted_at = Column(DateTime)
 
     profesores = relationship("Profesor", back_populates="secciones")
@@ -99,8 +99,8 @@ class Profesor(Base):
 
     id = Column(BigInteger, primary_key=True, index=True)
     usuario_id = Column(BigInteger, ForeignKey("usuarios.id"))
-    created_at = Column(DateTime, server_default=text('NOW()'))
-    updated_at = Column(DateTime, server_default=text('NOW()'))
+    created_at = Column(DateTime, server_default=text('NOW()'), nullable=False)
+    updated_at = Column(DateTime, server_default=text('NOW()'), nullable=False)
 
     secciones = relationship("Seccion", back_populates="profesores")
 
@@ -112,8 +112,8 @@ class Estudiante(Base):
     usuario_id = Column(BigInteger, ForeignKey("usuarios.id"))
     grupo_id = Column(BigInteger, ForeignKey("grupos.id"))
     seccion_id = Column(BigInteger, ForeignKey("secciones.id"))
-    created_at = Column(DateTime, server_default=text('NOW()'))
-    updated_at = Column(DateTime, server_default=text('NOW()'))
+    created_at = Column(DateTime, server_default=text('NOW()'), nullable=False)
+    updated_at = Column(DateTime, server_default=text('NOW()'), nullable=False)
 
 class Grupo(Base):
     __tablename__ = "grupos"
@@ -123,8 +123,8 @@ class Grupo(Base):
     proyecto = Column(String)
     correlativo = Column(Integer, index=True)
     borrado = Column(Boolean, default=False)
-    created_at = Column(DateTime, server_default=text('NOW()'))
-    updated_at = Column(DateTime, server_default=text('NOW()'))
+    created_at = Column(DateTime, server_default=text('NOW()'), nullable=False)
+    updated_at = Column(DateTime, server_default=text('NOW()'), nullable=False)
     deleted_at = Column(DateTime)
 
     estudiantes = relationship("Estudiante", back_populates="grupo")
@@ -136,7 +136,7 @@ class Stakeholder(Base):
     id = Column(BigInteger, primary_key=True, index=True)
     iniciales = Column(String, index=True)
     usuario_id = Column(BigInteger, ForeignKey("usuarios.id"))
-    created_at = Column(DateTime, server_default=text('NOW()'))
-    updated_at = Column(DateTime, server_default=text('NOW()'))
+    created_at = Column(DateTime, server_default=text('NOW()'), nullable=False)
+    updated_at = Column(DateTime, server_default=text('NOW()'), nullable=False)
 
     grupos = relationship("Grupo", back_populates="stakeholders")
