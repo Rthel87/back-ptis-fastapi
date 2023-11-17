@@ -32,6 +32,8 @@ class Usuario(Base):
     deleted_at = Column(DateTime)
 
     rol = relationship("Rol", back_populates="usuarios")
+    estudiante = relationship("Estudiante", back_populates="usuario")
+    profesor = relationship("Profesor", back_populates="usuario")
 
 class Jornada(Base):
     __tablename__ = "jornadas"
@@ -111,7 +113,7 @@ class Estudiante(Base):
 
     usuario = relationship("Usuario", back_populates="estudiante")
     grupo = relationship("Grupo", back_populates="estudiantes")
-    seccon = relationship("Seccion", back_populates="estudiantes")
+    seccion = relationship("Seccion", back_populates="estudiantes")
 
 class Grupo(Base):
     __tablename__ = "grupos"
@@ -138,5 +140,3 @@ class Stakeholder(Base):
 
     usuario = relationship("Usuario", back_populates="stakeholder")
     grupos = relationship("Grupo", back_populates="stakeholders")
-
-    
