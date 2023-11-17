@@ -1,5 +1,5 @@
 from pydantic import BaseModel, EmailStr
-from datetime import Date
+from datetime import date
 from typing import Optional
 
 # Definición de la clase Usuario con Pydantic
@@ -17,9 +17,9 @@ class Usuario(UsuarioBase):
     id: int
     rol_id: int
     borrado: bool
-    estudiante: Optional[Estudiante] = None
-    profesor: Optional[Profesor] = None
-    stakeholder: Optional[Stakeholder] = None
+    # estudiante: Optional[Estudiante] = None
+    # profesor: Optional[Profesor] = None
+    # stakeholder: Optional[Stakeholder] = None
 
     class Config:
         orm_mode = True
@@ -82,11 +82,11 @@ class SemestreBase(BaseModel):
     numero: int
     agno: int
     activo: bool
-    inicio: Date
-    fin: Date
+    inicio: date
+    fin: date
 
 class SemestreCreate(SemestreBase):
-    identificador: str = str(agno) + '-' + str(numero)
+    identificador: str
 
 class Semestre(SemestreBase):
     id: int
@@ -157,7 +157,7 @@ class StakeholderCreate(StakeholderBase):
 class Stakeholder(StakeholderBase):
     id: int
     usuario_id: int
-    grupos: list[Grupo] = []
+    # grupos: list[Grupo] = []
 
     class Config:
         orm_mode = True
