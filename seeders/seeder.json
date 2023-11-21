@@ -1,0 +1,192 @@
+[
+  {
+    "target_class": "Rol",
+    "data": [
+      {
+        "rol": "Coordinador",
+        "rango": 1
+      },
+      {
+        "rol": "Profesor",
+        "rango": 2
+      },
+      {
+        "rol": "Estudiante",
+        "rango": 3
+      },
+      {
+        "rol": "Stakeholder",
+        "rango": 4
+      }
+    ]
+  },
+  {
+    "target_class": "Jornada",
+    "data": [
+      {
+        "nombre": "Diurna",
+        "identificador": 1
+      },
+      {
+        "nombre": "Vespertina",
+        "identificador": 2
+      }
+    ]
+  },
+  {
+    "target_class": "Semestre",
+    "data": [
+      {
+        "numero": 1,
+        "agno": 2023,
+        "activo": true,
+        "inicio": "2023-03-22",
+        "fin": "2023-07-24"
+      }
+    ]
+  },
+  {
+    "target_class": "Curso",
+    "data": [
+      {
+        "nombre": "Proyecto de Ingenieria de Software",
+        "codigo": 13168
+      },
+      {
+        "nombre": "Proyecto de Ingenieria Informática",
+        "codigo": 13126
+      },
+      {
+        "nombre": "Proyecto de Ingenieria de Software",
+        "codigo": 13267
+      },
+      {
+        "nombre": "Taller de Ingenieria de Software",
+        "codigo": 13230
+      }
+    ]
+  },
+  {
+    "target_class": "Seccion",
+    "data": [
+      {
+        "codigo": "A1",
+        "!refs": {
+          "jornada": {
+            "target_class": "Jornada",
+            "criteria": {
+              "identificador": 1
+            }
+          },
+          "semestre": {
+            "target_class": "Semestre",
+            "criteria": {
+              "activo": true
+            }
+          },
+          "curso": {
+            "target_class": "Curso",
+            "criteria": {
+              "codigo": 13267
+            }
+          }
+        }
+      },
+      {
+        "codigo": "V21",
+        "!refs": {
+          "jornada": {
+            "target_class": "Jornada",
+            "criteria": {
+              "identificador": 2
+            }
+          },
+          "semestre": {
+            "target_class": "Semestre",
+            "criteria": {
+              "activo": true
+            }
+          },
+          "curso": {
+            "target_class": "Curso",
+            "criteria": {
+              "codigo": 13168
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "target_class": "Usuario",
+    "data": [
+      {
+        "nombre": "Hector",
+        "apellido_paterno": "Antillanca",
+        "apellido_materno": "Espina",
+        "correo_elec": "hector.antillanca@usach.cl",
+        "password": "secret",
+        "!refs": {
+          "rol": {
+            "target_class": "Rol",
+            "criteria": {
+              "rango": 1
+            }
+          }
+        }
+      },
+      {
+        "nombre": "Maria Carolina",
+        "apellido_paterno": "Chamorro",
+        "apellido_materno": "Ahumada",
+        "correo_elec": "mcchamorro@gmail.com",
+        "password": "secret",
+        "!refs": {
+          "rol": {
+            "target_class": "Rol",
+            "criteria": {
+              "rango": 2
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "target_class": "Grupo",
+    "data": [
+      {
+        "nombre": "SG",
+        "proyecto": "Sin Asignacionn"
+      }
+    ]
+  },
+  {
+    "target_class": "Profesor",
+    "data": [
+      {
+        "!refs": {
+          "usuario": {
+            "target_class": "Usuario",
+            "criteria": {
+              "email": "mcchamorro@gmail.com"
+            }
+          }
+        },
+        "!refs": {
+          "secciones": {
+            "target_class": "Seccion",
+            "criteria": {
+              "jornada": {
+                "target_class": "Jornada",
+                "criteria": {
+                  "identificador": 2
+                }
+              }
+            }
+          }
+        }
+      }
+    ]
+  }
+]

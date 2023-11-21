@@ -1,0 +1,106 @@
+[
+  {
+    "model": "db.models.Seccion",
+    "data": [
+      {
+        "codigo": "A1",
+        "!jornada_id": {
+          "model": "db.models.Jornada",
+          "filter": {
+            "identificador": 1
+          }
+        },
+        "!semestre_id": {
+          "model": "db.models.Semestre",
+          "filter": {
+            "activo": true
+          }
+        },
+        "!curso_id": {
+          "model": "db.models.Curso",
+          "filter": {
+            "codigo": "13267"
+          }
+        }
+      },
+      {
+        "codigo": "V21",
+        "!jornada_id": {
+          "model": "db.models.Jornada",
+          "filter": {
+            "identificador": 2
+          }
+        },
+        "!semestre_id": {
+          "model": "db.models.Semestre",
+          "filter": {
+            "activo": true
+          }
+        },
+        "!curso_id": {
+          "model": "db.models.Curso",
+          "filter": {
+            "codigo": "13168"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "model": "db.models.Usuario",
+    "data": [
+      {
+        "nombre": "Hector",
+        "apellido_paterno": "Antillanca",
+        "apellido_materno": "Espina",
+        "correo_elec": "hector.antillanca@usach.cl",
+        "password": "secret",
+        "!rol_id": {
+          "model": "db.models.Rol",
+          "filter": {
+            "rango": 1
+          }
+        }
+      },
+      {
+        "nombre": "Maria Carolina",
+        "apellido_paterno": "Chamorro",
+        "apellido_materno": "Ahumada",
+        "correo_elec": "mcchamorro@gmail.com",
+        "password": "secret",
+        "!rol_id": {
+          "model": "db.models.Rol",
+          "filter": {
+            "rango": 2
+          }
+        }
+      }
+    ]
+  },
+  {
+    "model": "db.models.Profesor",
+    "data": [
+      {
+        "!usuario_id": {
+          "model": "db.models.Usuario",
+          "filter": {
+            "correo_elec": "mcchamorro@gmail.com"
+          }
+        },
+        "!secciones": [
+          {
+            "model": "db.models.Seccion",
+            "data": {
+              "!jornada": {
+                "model": "db.models.Jornada",
+                "data": {
+                  "identificador": 2
+                }
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+]

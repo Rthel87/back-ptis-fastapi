@@ -1,0 +1,136 @@
+[
+  {
+    "model": "db.models.Rol",
+    "data": [
+      {
+        "id": 100,
+        "rol": "Coordinador",
+        "rango": 1
+      },
+      {
+        "id": 200,
+        "rol": "Profesor",
+        "rango": 2
+      },
+      {
+        "id": 300,
+        "rol": "Estudiante",
+        "rango": 3
+      },
+      {
+        "id": 400,
+        "rol": "Stakeholder",
+        "rango": 4
+      }
+    ]
+  },
+  {
+    "model": "db.models.Jornada",
+    "data": [
+      {
+        "id": 100,
+        "nombre": "Diurna",
+        "identificador": 1
+      },
+      {
+        "id": 200,
+        "nombre": "Vespertina",
+        "identificador": 2
+      }
+    ]
+  },
+  {
+    "model": "db.models.Semestre",
+    "data": [
+      {
+        "id": 100,
+        "numero": 1,
+        "agno": 2023,
+        "activo": true,
+        "inicio": "2023-03-22",
+        "fin": "2023-07-24"
+      }
+    ]
+  },
+  {
+    "model": "db.models.Curso",
+    "data": [
+      {
+        "id": 100,
+        "nombre": "Proyecto de Ingenieria de Software",
+        "codigo": 13168
+      },
+      {
+        "id": 200,
+        "nombre": "Proyecto de Ingenieria Informática",
+        "codigo": 13126
+      },
+      {
+        "id": 300,
+        "nombre": "Proyecto de Ingenieria de Software",
+        "codigo": 13267
+      },
+      {
+        "id": 400,
+        "nombre": "Taller de Ingenieria de Software",
+        "codigo": 13230
+      }
+    ]
+  },
+  {
+    "model": "db.models.Grupo",
+    "data": [
+      {
+        "nombre": "SG",
+        "proyecto": "Sin Asignacionn"
+      }
+    ]
+  },
+  {
+    "model": "db.models.Seccion",
+    "data": [
+      {
+        "codigo": "A1",
+        "jornada_id": 100,
+        "semestre_id": 100,
+        "curso_id": 300
+      },
+      {
+        "codigo": "V21",
+        "jornada_id": 200,
+        "semestre_id": 100,
+        "curso_id": 100
+      }
+    ]
+  },
+  {
+    "model": "db.models.Usuario",
+    "data": [
+      {
+        "nombre": "Hector",
+        "apellido_paterno": "Antillanca",
+        "apellido_materno": "Espina",
+        "correo_elec": "hector.antillanca@usach.cl",
+        "password": "secret",
+        "rol_id": 100
+      },
+      {
+        "id": 200,
+        "nombre": "Maria Carolina",
+        "apellido_paterno": "Chamorro",
+        "apellido_materno": "Ahumada",
+        "correo_elec": "mcchamorro@gmail.com",
+        "password": "secret",
+        "rol_id": 200
+      }
+    ]
+  },
+  {
+    "model": "db.models.Profesor",
+    "data": [
+      {
+        "usuario_id": 200
+      }
+    ]
+  }
+]
