@@ -1,4 +1,4 @@
-- target_class: Rol
+- target_class: db.models.Rol
   data:
   - rol: Coordinador
     rango: 1
@@ -8,20 +8,20 @@
     rango: 3
   - rol: Stakeholder
     rango: 4
-- target_class: Jornada
+- target_class: db.models.Jornada
   data:
   - nombre: Diurna
     identificador: 1
   - nombre: Vespertina
     identificador: 2
-- target_class: Semestre
+- target_class: db.models.Semestre
   data:
   - numero: 1
     agno: 2023
     activo: True
     inicio: '2023-03-22'
     fin: '2023-07-24'
-- target_class: Curso
+- target_class: db.models.Curso
   data:
   - nombre: Proyecto de Ingeniería de Software
     codigo: 13168
@@ -31,37 +31,37 @@
     codigo: 13267
   - nombre: Taller de Ingeniería de Software
     codigo: 13230
-- target_class: Seccion
+- target_class: db.models.Seccion
   data:
   - codigo: 'A1'
     '!refs':
       jornada:
-        target_class: Jornada
+        target_class: db.models.Jornada
         criteria:
           identificador: 1
       semestre:
-        target_class: Semestre
+        target_class: db.models.Semestre
         criteria:
           activo: True
       curso:
-        target_class: Curso
+        target_class: db.models.Curso
         criteria:
           codigo: 13267
   - codigo: 'V21'
     '!refs':
       jornada:
-        target_class: Jornada
+        target_class: db.models.Jornada
         criteria:
           identificador: 2
       semestre:
-        target_class: Semestre
+        target_class: db.models.Semestre
         criteria:
           activo: True
       curso:
-        target_class: Curso
+        target_class: db.models.Curso
         criteria:
           codigo: 13168
-- target_class: Usuario
+- target_class: db.models.Usuario
   data:
   - nombre: Héctor
     apellido_paterno: Antillanca
@@ -70,7 +70,7 @@
     password: secret
     '!refs':
       rol:
-        target_class: Rol
+        target_class: db.models.Rol
         criteria:
           rango: 1
   - nombre: María Carolina
@@ -80,24 +80,24 @@
     password: secret
     '!refs':
       rol:
-        target_class: Rol
+        target_class: db.models.Rol
         criteria:
           rango: 2
-- target_class: Grupo
+- target_class: db.models.Grupo
   data:
   - nombre: SG
     proyecto: Sin Asignación
-- target_class: Profesor
+- target_class: db.models.Profesor
   data:
   - '!refs':
-    usuario:
-      target_class: Usuario
-      criteria:
-        email: mcchamorro@gmail.com
-    secciones:
-      target_class: Seccion
-      criteria:
-        jornada:
-          target_class: Jornada
-          criteria:
-            identificador: 2
+      usuario:
+        target_class: db.models.Usuario
+        criteria:
+          email: mcchamorro@gmail.com
+#     secciones:
+#       target_class: Seccion
+#       criteria:
+#         jornada:
+#           target_class: Jornada
+#           criteria:
+#             identificador: 2

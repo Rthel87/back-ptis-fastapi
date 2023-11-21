@@ -1,6 +1,6 @@
 [
   {
-    "target_class": "Rol",
+    "model": "db.models.Rol",
     "data": [
       {
         "rol": "Coordinador",
@@ -21,7 +21,7 @@
     ]
   },
   {
-    "target_class": "Jornada",
+    "model": "db.models.Jornada",
     "data": [
       {
         "nombre": "Diurna",
@@ -34,7 +34,7 @@
     ]
   },
   {
-    "target_class": "Semestre",
+    "model": "db.models.Semestre",
     "data": [
       {
         "numero": 1,
@@ -46,7 +46,7 @@
     ]
   },
   {
-    "target_class": "Curso",
+    "model": "db.models.Curso",
     "data": [
       {
         "nombre": "Proyecto de Ingenieria de Software",
@@ -67,58 +67,54 @@
     ]
   },
   {
-    "target_class": "Seccion",
+    "model": "db.models.Seccion",
     "data": [
       {
         "codigo": "A1",
-        "!refs": {
-          "jornada": {
-            "target_class": "Jornada",
-            "criteria": {
-              "identificador": 1
-            }
-          },
-          "semestre": {
-            "target_class": "Semestre",
-            "criteria": {
-              "activo": true
-            }
-          },
-          "curso": {
-            "target_class": "Curso",
-            "criteria": {
-              "codigo": 13267
-            }
+        "!jornada_id": {
+          "model": "db.models.Jornada",
+          "filter": {
+            "identificador": 1
+          }
+        },
+        "!semestre_id": {
+          "model": "db.models.Semestre",
+          "filter": {
+            "activo": true
+          }
+        },
+        "!curso_id": {
+          "model": "db.models.Curso",
+          "filter": {
+            "codigo": 13267
           }
         }
       },
       {
         "codigo": "V21",
-        "!refs": {
-          "jornada": {
-            "target_class": "Jornada",
-            "criteria": {
-              "identificador": 2
-            }
-          },
-          "semestre": {
-            "target_class": "Semestre",
-            "criteria": {
-              "activo": true
-            }
-          },
-          "curso": {
-            "target_class": "Curso",
-            "criteria": {
-              "codigo": 13168
-            }
+        "!jornada_id": {
+          "model": "db.models.Jornada",
+          "filter": {
+            "identificador": 2
+          }
+        },
+        "!semestre_id": {
+          "model": "db.models.Semestre",
+          "filter": {
+            "activo": true
+          }
+        },
+        "!curso_id": {
+          "model": "db.models.Curso",
+          "filter": {
+            "codigo": 13168
           }
         }
       }
     ]
   },
   {
-    "target_class": "Usuario",
+    "model": "db.models.Usuario",
     "data": [
       {
         "nombre": "Hector",
@@ -126,12 +122,10 @@
         "apellido_materno": "Espina",
         "correo_elec": "hector.antillanca@usach.cl",
         "password": "secret",
-        "!refs": {
-          "rol": {
-            "target_class": "Rol",
-            "criteria": {
-              "rango": 1
-            }
+        "!rol_id": {
+          "model": "db.models.Rol",
+          "filter": {
+            "rango": 1
           }
         }
       },
@@ -141,19 +135,17 @@
         "apellido_materno": "Ahumada",
         "correo_elec": "mcchamorro@gmail.com",
         "password": "secret",
-        "!refs": {
-          "rol": {
-            "target_class": "Rol",
-            "criteria": {
-              "rango": 2
-            }
+        "!rol_id": {
+          "model": "db.models.Rol",
+          "filter": {
+            "rango": 2
           }
         }
       }
     ]
   },
   {
-    "target_class": "Grupo",
+    "model": "db.models.Grupo",
     "data": [
       {
         "nombre": "SG",
@@ -162,30 +154,28 @@
     ]
   },
   {
-    "target_class": "Profesor",
+    "model": "db.models.Profesor",
     "data": [
       {
-        "!refs": {
-          "usuario": {
-            "target_class": "Usuario",
-            "criteria": {
-              "email": "mcchamorro@gmail.com"
-            }
+        "!usuario_id": {
+          "model": "db.models.Usuario",
+          "filter": {
+            "email": "mcchamorro@gmail.com"
           }
         },
-        "!refs": {
-          "secciones": {
-            "target_class": "Seccion",
-            "criteria": {
-              "jornada": {
-                "target_class": "Jornada",
-                "criteria": {
+        "!secciones": [
+          {
+            "model": "db.models.Seccion",
+            "data": {
+              "!jornada": {
+                "model": "db.models.Jornada",
+                "data": {
                   "identificador": 2
                 }
               }
             }
           }
-        }
+        ]
       }
     ]
   }
