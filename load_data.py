@@ -1,11 +1,12 @@
 from db.database import SessionLocal
 from db import models
 from sqlalchemyseed import load_entities_from_json, Seeder, HybridSeeder
-import pdb
+from sqlalchemy import select, insert
+# import pdb
 
 # Load entities
 entities = load_entities_from_json('./seeders/seeder2.json')
-entities_with_ref = load_entities_from_json('./seeders/seeder_with_refs.json')
+# entities_with_ref = load_entities_from_json('./seeders/seeder_with_refs.json')
 
 # Initializing Seeder
 session = SessionLocal()
@@ -20,6 +21,18 @@ session.commit()
 # breakpoint()
 # hybrid.seed(entities_with_ref)
 # session.commit()
+
+# Agregando secciones al profesor
+stmt = select(models.Profesor).where(models.Profesor.usuario_id == 200)
+profesor = session.scalars(stmt).one()
+secciones_add = session.scalars(
+    select(models.Seccion).where(models.Seccion.jornada.has(models.Jornada.identificador == 2))
+).all()
+for seccion in secciones_add:
+    seccion.profesores.append(profesor)
+session.commit()
+
+print(" --------------- Se han agregado las entidades a la base de datos ---------------")
 
 session.close()
 
