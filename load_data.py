@@ -1,18 +1,26 @@
 from db.database import SessionLocal
 from db import models
-from sqlalchemyseed import load_entities_from_json, HybridSeeder
+from sqlalchemyseed import load_entities_from_json, Seeder, HybridSeeder
+# import pdb
 
 # Load entities
 entities = load_entities_from_json('./seeders/seeder2.json')
+entities_with_ref = load_entities_from_json('./seeders/seeder_with_refs.json')
 
 # Initializing Seeder
 session = SessionLocal()
-seeder = HybridSeeder(session, ref_prefix='!')
+seeder = Seeder(session)
+# breakpoint()
 
-# Seeding
+# Seeding entities without refs!
 seeder.seed(entities)
-
 session.commit()
+
+# Seeding entities with refs
+hybrid = HybridSeeder(session, ref_prefix='!')
+hybrid.seed(entities_with_ref)
+session.commit()
+
 session.close()
 
 #### Script for sqlalchemy-seeder ------ Don´t work
