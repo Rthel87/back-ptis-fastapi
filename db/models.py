@@ -1,7 +1,23 @@
-from sqlalchemy import Boolean, Column, ForeignKey, BigInteger, Integer, String, Date, DateTime, text
+from sqlalchemy import Boolean, Column, ForeignKey, BigInteger, Integer, String, Date, DateTime, text, Table
 from sqlalchemy.orm import relationship
 
 from .database import Base
+
+# Relaciones Many to Many
+secciones_profesores = Table(
+    "secciones_profesores",
+    Base.metadata,
+    Column("profesor_id", ForeignKey("profesores.id"), primary_key=True),
+    Column("seccion_id", ForeignKey("secciones.id"), primary_key=True)
+)
+
+grupos_stakeholders = Table(
+    "grupos_stakeholders",
+    Base.metadata,
+    Column("grupo_id", ForeignKey("grupos.id"), primary_key=True),
+    Column("stakeholder_id", ForeignKey("stakeholders.id"), primary_key=True)
+)
+
 
 class Rol(Base):
     __tablename__ = "roles"
@@ -35,6 +51,7 @@ class Usuario(Base):
     rol = relationship("Rol", back_populates="usuarios")
     estudiante = relationship("Estudiante", back_populates="usuario")
     profesor = relationship("Profesor", back_populates="usuario")
+    stakeholder = relationship("Stakeholder", back_populates="usuario")
 
 class Jornada(Base):
     __tablename__ = "jornadas"
@@ -92,7 +109,11 @@ class Seccion(Base):
     updated_at = Column(DateTime, server_default=text('NOW()'), nullable=False)
     deleted_at = Column(DateTime)
 
-    profesores = relationship("Profesor", back_populates="secciones")
+    jornada = relationship("Jornada", back_populates="secciones")
+    curso = relationship("Curso", back_populates="secciones")
+    semestre = relationship("Semestre", back_populates="secciones")
+    profesores = relationship("Profesor", secondary=secciones_profesores, back_populates="secciones")
+    estudiantes = relationship("Estudiante", back_populates="seccion")
 
 class Profesor(Base):
     __tablename__ = "profesores"
@@ -102,7 +123,8 @@ class Profesor(Base):
     created_at = Column(DateTime, server_default=text('NOW()'), nullable=False)
     updated_at = Column(DateTime, server_default=text('NOW()'), nullable=False)
 
-    secciones = relationship("Seccion", back_populates="profesores")
+    usuario = relationship("Usuario", back_populates="profesor")
+    secciones = relationship("Seccion", secondary=secciones_profesores, back_populates="profesores")
 
 class Estudiante(Base):
     __tablename__ = "estudiantes"
@@ -114,6 +136,10 @@ class Estudiante(Base):
     seccion_id = Column(BigInteger, ForeignKey("secciones.id"))
     created_at = Column(DateTime, server_default=text('NOW()'), nullable=False)
     updated_at = Column(DateTime, server_default=text('NOW()'), nullable=False)
+
+    usuario = relationship("Usuario", back_populates="estudiante")
+    grupo = relationship("Grupo", back_populates="estudiantes")
+    seccion = relationship("Seccion", back_populates="estudiantes")
 
 class Grupo(Base):
     __tablename__ = "grupos"
@@ -128,7 +154,7 @@ class Grupo(Base):
     deleted_at = Column(DateTime)
 
     estudiantes = relationship("Estudiante", back_populates="grupo")
-    stakeholders = relationship("Stakeholder", back_populates="grupos")
+    stakeholders = relationship("Stakeholder", secondary=grupos_stakeholders, back_populates="grupos")
 
 class Stakeholder(Base):
     __tablename__ = "stakeholders"
@@ -139,4 +165,5 @@ class Stakeholder(Base):
     created_at = Column(DateTime, server_default=text('NOW()'), nullable=False)
     updated_at = Column(DateTime, server_default=text('NOW()'), nullable=False)
 
-    grupos = relationship("Grupo", back_populates="stakeholders")
+    usuario = relationship("Usuario", back_populates="stakeholder")
+    grupos = relationship("Grupo", secondary=grupos_stakeholders, back_populates="stakeholders")
