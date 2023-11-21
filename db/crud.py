@@ -56,4 +56,7 @@ def get_jornadas(db: Session):
     return db.query(models.Jornada).filter(models.Jornada.borrado == False)
 
 def get_jornadas_profesor(db: Session, user_id: int):
-    return db.selec(models.Jornada).join(models.Seccion).join(models.Profesor).filter(models.Profesor.usuario_id == user_id)
+    return db.select(models.Jornada).join(models.Seccion).join(models.Profesor)filter(models.Jornada.borrado == False).filter(models.Profesor.usuario_id == user_id)
+
+def get_jornadas_stakeholder(db: Session, user_id: int):
+    return db.select(models.Jornada).join(models.Seccion).join(models.Estudiante).join(models.Grupo).join(models.Stakeholder).filter(models.Jornada.borrado == False).filter(models.Stakeholder.usuario_id == user_id)
