@@ -28,7 +28,7 @@ session.commit()
 
 # Generando password inicial para administrador y profesor
 password = env["ADMIN_PW"].encode('UTF-8')
-hashed = bcrypt.hashpw(password, bcrypt.gensalt())
+hashed = bcrypt.hashpw(password, bcrypt.gensalt()).decode('UTF-8')
 admin = session.scalars(
     select(models.Usuario).where(models.Usuario.rol.has(models.Rol.rango == 1))
 ).one()
