@@ -1,7 +1,7 @@
 from fastapi import Depends, APIRouter
 from sqlalchemy.orm import Session
 from db import models, schemas, crud
-from db.session import get_db
+from utils.session import get_db
 from pydantic import BaseModel
 from dotenv import dotenv_values
 import bcrypt

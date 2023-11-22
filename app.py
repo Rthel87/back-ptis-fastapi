@@ -4,6 +4,7 @@ from db import crud, models, schemas
 from db.database import SessionLocal, engine
 from typing import Union
 from routers import usuarios
+from utils.session import get_db
 
 # models.Base.metadata.create_all(bind=engine)
 
@@ -11,15 +12,8 @@ app = FastAPI()
 
 app.include_router(usuarios.router)
 
-# Dependency
-## Creación de sesión de conexión a la base de datos
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
 
+# Rutas root
 @app.get('/')
 def read_root():
     return {"Hello": "World"}
