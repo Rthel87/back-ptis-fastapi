@@ -1,7 +1,8 @@
-from fastapi import Depends, APIRouter
+from typing import Annotated
+from fastapi import Depends, APIRouter, Header
 from sqlalchemy.orm import Session
 from db import models, schemas, crud
-from utils.main import get_db, encode_token, decode_token
+from utils.main import get_db, encode_token, current_usuario
 from pydantic import BaseModel
 import bcrypt
 
@@ -23,3 +24,8 @@ def login(auth: Auth, db: Session = Depends(get_db)):
         return {"error": "Contraseña errónea"}
     token = encode_token({"usuario_id": usuario.id})
     return {"jwt": token}
+
+@router.get("/login/user", response_model=schemas.Usuario)
+def user(authorization: Annotated[str | None, Header()] = None, db: Session = Depends(get_db)):
+    print("header : ", authorization)
+    return current_usuario(authorization, db)

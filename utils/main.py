@@ -1,4 +1,6 @@
+from sqlalchemy.orm import Session
 from db.database import SessionLocal
+from db import models
 from dotenv import dotenv_values
 import jwt
 
@@ -20,3 +22,12 @@ def encode_token(payload):
 
 def decode_token(token):
     return jwt.decode(token, env["SECRET_WORD"], algorithms=["HS256"])
+
+def get_id_from_header(header: str):
+    token = header.split(' ')[1]
+    payload = decode_token(token)
+    return payload["usuario_id"]
+
+def current_usuario(header: str, db: Session):
+    user_id = get_id_from_header(header)
+    return db.query(models.Usuario).filter(models.Usuario.id == user_id).first()
