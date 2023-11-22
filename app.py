@@ -4,7 +4,7 @@ from db import crud, models, schemas
 from db.database import SessionLocal, engine
 from typing import Union
 from routers import usuarios
-from utils.session import get_db
+from utils.main import get_db
 
 # models.Base.metadata.create_all(bind=engine)
 
