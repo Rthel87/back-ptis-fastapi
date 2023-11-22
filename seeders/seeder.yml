@@ -67,7 +67,7 @@
     apellido_paterno: Antillanca
     apellido_materno: Espina
     email: hector.antillanca@usach.cl
-    password: secret
+    password: null
     '!refs':
       rol:
         target_class: db.models.Rol
@@ -77,7 +77,7 @@
     apellido_paterno: Chamorro
     apellido_materno: Ahumada
     email: mcchamorro@gmail.com
-    password: secret
+    password: null
     '!refs':
       rol:
         target_class: db.models.Rol

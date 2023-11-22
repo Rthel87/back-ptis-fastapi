@@ -111,7 +111,7 @@
         "apellido_paterno": "Antillanca",
         "apellido_materno": "Espina",
         "correo_elec": "hector.antillanca@usach.cl",
-        "password": "secret",
+        "password": "xxxxxxxx",
         "rol_id": 100
       },
       {
@@ -120,7 +120,7 @@
         "apellido_paterno": "Chamorro",
         "apellido_materno": "Ahumada",
         "correo_elec": "mcchamorro@gmail.com",
-        "password": "secret",
+        "password": "xxxxxxxx",
         "rol_id": 200
       }
     ]
