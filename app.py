@@ -3,10 +3,13 @@ from sqlalchemy.orm import Session
 from db import crud, models, schemas
 from db.database import SessionLocal, engine
 from typing import Union
+from routers import usuarios
 
 # models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
+
+app.include_router(usuarios.router)
 
 # Dependency
 ## Creación de sesión de conexión a la base de datos
