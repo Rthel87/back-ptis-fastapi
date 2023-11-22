@@ -1,8 +1,12 @@
 from db.database import SessionLocal
 from db import models
 from sqlalchemyseed import load_entities_from_json, Seeder, HybridSeeder
-from sqlalchemy import select, insert
+from sqlalchemy import select, insert, update
+from dotenv import dotenv_values
+import bcrypt
 # import pdb
+
+env = dotenv_values(".env")
 
 # Load entities
 entities = load_entities_from_json('./seeders/seeder2.json')
@@ -22,6 +26,13 @@ session.commit()
 # hybrid.seed(entities_with_ref)
 # session.commit()
 
+# Generando password inicial para administrador y profesor
+password = env["ADMIN_PW"].encode('UTF-8')
+hashed = bcrypt.hashpw(password, bcrypt.gensalt())
+admin = session.scalars(
+    select(models.Usuario).where(models.Usuario.rol.has(models.Rol.rango == 1))
+).one()
+
 # Agregando secciones al profesor
 stmt = select(models.Profesor).where(models.Profesor.usuario_id == 200)
 profesor = session.scalars(stmt).one()
@@ -30,6 +41,11 @@ secciones_add = session.scalars(
 ).all()
 for seccion in secciones_add:
     seccion.profesores.append(profesor)
+
+# Actualizando password inicial a administrador y profesor
+query = update(models.Usuario).where(models.Usuario.id.in_([admin.id, profesor.usuario_id])).values(password=hashed)
+session.execute(query)
+
 session.commit()
 
 print(" --------------- Se han agregado las entidades a la base de datos ---------------")
