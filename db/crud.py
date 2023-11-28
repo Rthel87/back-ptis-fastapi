@@ -1,11 +1,13 @@
 from sqlalchemy.orm import Session
 from . import models, schemas
+import bcrypt
 
 # Funciones CRUD para el modelo 'Usuario'
 ## Create
 def create_usuario(db: Session, user: schemas.UsuarioCreate, role_id: int):
-    fake_hashed_password = user.password + 'notReallyHashed'
-    db_user = models.Usuario(nombre=user.nombre, apellido_paterno=user.apellido_paterno, apellido_materno=user.apellido_materno, run=user.run, correo_elec=user.correo_elec, password=fake_hashed_password, rol_id=role_id)
+    # fake_hashed_password = user.password + 'notReallyHashed'
+    hashed_password = bcrypt.hashpw(user.password, bcrypt.gensalt()).decode('UTF-8')
+    db_user = models.Usuario(nombre=user.nombre, apellido_paterno=user.apellido_paterno, apellido_materno=user.apellido_materno, run=user.run, correo_elec=user.correo_elec, password=hashed_password, rol_id=role_id)
     db.add(db_user)
     db.commit()
     db.refresh(db_user)
@@ -56,7 +58,7 @@ def get_jornadas(db: Session):
     return db.query(models.Jornada).filter(models.Jornada.borrado == False)
 
 def get_jornadas_profesor(db: Session, user_id: int):
-    return db.select(models.Jornada).join(models.Seccion).join(models.Profesor)filter(models.Jornada.borrado == False).filter(models.Profesor.usuario_id == user_id)
+    return db.select(models.Jornada).join(models.Seccion).join(models.Profesor).filter(models.Jornada.borrado == False).filter(models.Profesor.usuario_id == user_id)
 
 def get_jornadas_stakeholder(db: Session, user_id: int):
     return db.select(models.Jornada).join(models.Seccion).join(models.Estudiante).join(models.Grupo).join(models.Stakeholder).filter(models.Jornada.borrado == False).filter(models.Stakeholder.usuario_id == user_id)

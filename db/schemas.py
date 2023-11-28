@@ -2,6 +2,22 @@ from pydantic import BaseModel, EmailStr
 from datetime import date
 from typing import Optional
 
+# Definición clase Rol con Pydantic
+class RolBase(BaseModel):
+    rol: str
+    rango: int
+
+class RolCreate(RolBase):
+    pass
+
+class Rol(RolBase):
+    id: int
+    # usuarios: list[Usuario] = []
+
+    class Config:
+        orm_mode = True
+
+
 # Definición de la clase Usuario con Pydantic
 class UsuarioBase(BaseModel):
     nombre: str
@@ -16,27 +32,10 @@ class UsuarioCreate(UsuarioBase):
 class Usuario(UsuarioBase):
     id: int
     rol_id: int
-    borrado: bool
+    rol: Optional[Rol] = None
     # estudiante: Optional[Estudiante] = None
     # profesor: Optional[Profesor] = None
     # stakeholder: Optional[Stakeholder] = None
-
-    class Config:
-        orm_mode = True
-
-
-# Definición clase Rol con Pydantic
-class RolBase(BaseModel):
-    rol: str
-    rango: int
-
-class RolCreate(RolBase):
-    pass
-
-class Rol(RolBase):
-    id: int
-    usuarios: list[Usuario] = []
-    borrado: bool
 
     class Config:
         orm_mode = True
