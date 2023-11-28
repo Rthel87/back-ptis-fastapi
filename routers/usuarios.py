@@ -27,5 +27,4 @@ def login(auth: Auth, db: Session = Depends(get_db)):
 
 @router.get("/login/user", response_model=schemas.Usuario)
 def user(authorization: Annotated[str | None, Header()] = None, db: Session = Depends(get_db)):
-    print("header : ", authorization)
     return current_usuario(authorization, db)
